@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import profilePic from "../../assets/img/correct-profile.jpg";
 
-import { AiFillGithub } from "react-icons/ai";
-import { AiFillLinkedin } from "react-icons/ai";
-import { AiOutlineFile } from "react-icons/ai";
+import { AiFillGithub, AiFillLinkedin, AiOutlineFile } from "react-icons/ai";
 import { BiSmile } from "react-icons/bi";
 import { FaRegFolderOpen } from "react-icons/fa";
 import { IoMdContact } from "react-icons/io";
 
-function Nav() {
+function Nav(props) {
+  const { navItem = [], setSelectedNavItem, selectedNavItem } = props;
+
+  useEffect(() => {
+    document.title = "Josh Carter" + selectedNavItem;
+  }, [selectedNavItem]);
+
+  // function currentNavItem(chosenItem) {
+  //   console.log(`${chosenItem} clicked`);
+  // }
+
   return (
     <header id="header">
       <div className="d-flex flex-column">
@@ -41,6 +49,20 @@ function Nav() {
 
         <nav className="nav-menu">
           <ul>
+            {navItem.map((nav) => (
+              <li
+                className={`mx-1 ${
+                  selectedNavItem.name === nav.name && "navActive"
+                }`}
+                key={nav.name}
+              >
+                <span
+                  onClick={() => {
+                    setSelectedNavItem(nav);
+                  }}
+                ></span>
+              </li>
+            ))}
             <li>
               <a href="#about">
                 <i className="bx bx-user">
